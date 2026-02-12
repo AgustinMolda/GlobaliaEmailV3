@@ -2,10 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FormEmailRequest;
+use App\Services\FormEmailService;
+use App\Services\FormService;
 use Illuminate\Http\Request;
 
 class FormEmailController extends Controller
 {
+
+    public function __construct(protected FormEmailService $formEmailService , protected FormService $formService)
+    {
+        
+        
+    }
+    
     /**
      * Display a listing of the resource.
      */
@@ -25,9 +35,14 @@ class FormEmailController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FormEmailRequest $request)
     {
-        //
+
+
+        $this->formService->store($request->validated());
+        $this->formEmailService->sendEmail('info@globalia-tech.com');
+
+        return response()->json(['message' => 'Formulario enviado y correo electrónico enviado con éxito.'], 200);
     }
 
     /**

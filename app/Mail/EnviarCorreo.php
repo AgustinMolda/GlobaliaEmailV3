@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Models\FormEmail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -16,9 +17,9 @@ class EnviarCorreo extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct()
+    public function __construct(protected FormEmail $formEmail)
     {
-        //
+        
     }
 
     /**
@@ -27,8 +28,10 @@ class EnviarCorreo extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Enviar Correo',
-        );
+            subject: 'Globalia Contacto Nuevo',   
+            );
+                                            
+    
     }
 
     /**
@@ -38,6 +41,9 @@ class EnviarCorreo extends Mailable
     {
         return new Content(
             view: 'mails.enviar-correo',
+            with: [
+                'formEmail' => json_decode($this->formEmail, JSON_PRETTY_PRINT),
+            ],
         );
     }
 

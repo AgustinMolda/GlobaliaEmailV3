@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Mail\EnviarCorreo;
 use App\Models\FormEmail;
+use Illuminate\Support\Facades\Mail;
 
 class FormEmailService
 {
@@ -15,10 +16,8 @@ class FormEmailService
         
     }
 
-    public function sendEmail(array $data)
+    public function sendEmail(string $email)
     {
-        $form= FormEmail::create($data); 
-
-        $correo = new EnviarCorreo();
+        Mail::to($email)->send(new EnviarCorreo(FormEmail::first()));
     }
 }

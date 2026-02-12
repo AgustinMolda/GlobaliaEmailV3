@@ -8,9 +8,12 @@ Route::get('/', function () {
 });
 
 
-Route::post('enviar-correo', function () {
+/*Route::post('enviar-correo', function () {
     // Lógica para enviar el correo electrónico
     Mail::to('agusting.moldavsky@gmail.com')->send(new EnviarCorreo());
     
     return 'Correo enviado';
-})->name('enviar-correo');
+})->name('enviar-correo');*/
+
+Route::post('enviar-correo', [App\Http\Controllers\FormEmailController::class, 'store'])->name('enviar-correo');
+
